@@ -3,11 +3,9 @@ title: API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='#'>Sign Up for an API Key</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -18,67 +16,37 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Welcome to the Riviera Build API! You can use our API to access Riviera Build API endpoints, which can get information on the application you have access to, builds uploaded, even upload builds!
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl "https://apps.rivierabuild.com/api/applications"
+  -H "api-key: your-api-key"
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `your-api-key` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Riviera Build uses API keys to allow access to the API. You can get your Riviera Build API key in the [settings section](https://apps.rivierabuild.com/settings).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Riviera Build expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+`api-key: your-api-key`
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+You must replace `your-api-key` with your personal API key.
 </aside>
 
-# Kittens
+# Applications
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Get All applications
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "https://apps.rivierabuild.com/api/applications"
+  -H "api-key: your-api-key"
 ```
 
 > The above command returns JSON structured like this:
@@ -86,83 +54,125 @@ curl "http://example.com/api/kittens"
 ```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
+    "id":1,
+    "user_id":1,
+    "name":"Crazy App",
+    "logo_url":"https://example.com/image.png"
+    },
+    {
+      "id":2,
+      "user_id":1,
+      "name":"Simple App",
+      "logo_url":"https://example.com/image.png"
+    }
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves all applications.
 
 ### HTTP Request
 
-`GET http://example.com/kittens`
+`GET https://apps.rivierabuild.com/api/applications`
 
-### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## Create an application
 
 ```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+curl -XPOST "https://apps.rivierabuild.com/api/applications"
+  -H "api-key: your-api-key"
+  -F application[name]="Example App"
+  -F file=@"/path/to/the/image/to/upload"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "id":2,
+  "user_id":1,
+  "name":"Example App",
+  "logo_url":"https://example.com/image.png"
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+This endpoint creates an application.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST https://apps.rivierabuild.com/api/applications`
 
-### URL Parameters
+### Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the cat to retrieve
+application[name] | Name of the application
+file | Logo image file, as part of the the POST body (Optional)
 
+
+## Delete an application
+
+```shell
+curl -XDELETE "https://apps.rivierabuild.com/api/applications/1"
+  -H "api-key: your-api-key"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "result":"deleted"
+}
+```
+
+This endpoint deletes an application.
+
+### HTTP Request
+
+`DELETE https://apps.rivierabuild.com/api/applications/<ID>`
+
+### Parameters
+
+Parameter | Description
+--------- | -----------
+ID | Application ID
+
+
+#Builds
+## Upload a build
+
+```shell
+curl -XPOST "https://apps.rivierabuild.com/api/upload"
+  -H "api-key: your-api-key"
+  -F file=@"/path/to/ipa/file"
+  -F availability="1_week"
+  -F passcode="secretpassword"
+  -F app_id="1"
+  -F commit_sha="ewtotj4535ogjropgjerotj3"
+  -F note="This build is awesome!"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "success":true,
+  "file_url":"https://apps.rivierabuild.com/get/dovjek"
+}
+```
+
+This endpoint uploads a build to Riviera Build.
+
+### HTTP Request
+
+`POST https://apps.rivierabuild.com/api/upload`
+
+### Parameters
+
+Parameter | Description
+--------- | -----------
+file | IPA of APK file to upload
+availability | Determines for how long the build will be available
+passcode | Optional password that would be required to install the build
+app_id | Optional application ID that you want to associate your build to
+commit_sha | Optional Commit SHA associated to this build
+note | Optional release note. Support Markdown.
