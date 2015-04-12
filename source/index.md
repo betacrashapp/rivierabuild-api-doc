@@ -171,8 +171,43 @@ This endpoint uploads a build to Riviera Build.
 Parameter | Description
 --------- | -----------
 file | IPA of APK file to upload
-availability | Determines for how long the build will be available
+availability | Determines for how long the build will be available. Available values: 10_minutes, 1_hour, 3_hours, 6_hours, 12_hours, 24_hours, 1_week, 2_weeks, 1_month, 2_months
 passcode | Optional password that would be required to install the build
 app_id | Optional application ID that you want to associate your build to
 commit_sha | Optional Commit SHA associated to this build
 note | Optional release note. Support Markdown.
+
+## Latest build
+
+```shell
+curl -XGET "https://apps.rivierabuild.com/api/applications/1/builds/latest"
+  -H "api-key: your-api-key"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 59,
+  "build_name": "MyApp.ipa",
+  "created_at": "2015-02-22T18:33:42.861Z",
+  "version": "1.0",
+  "build_number": "1.0",
+  "name": "App Name",
+  "note": "Some note you wrote earlier",
+  "available_until": "2015-04-19T18:33:42.723Z",
+  "commit_sha": "ewfwefonwerfgoinrgerogrgojergpojergoeprgjerpogjer"
+}
+```
+
+This endpoint uploads a build to Riviera Build.
+
+### HTTP Request
+
+`GET https://apps.rivierabuild.com/api/applications/<app_id>/builds/latest`
+
+### Parameters
+
+Parameter | Description
+--------- | -----------
+app_id | Application ID 
