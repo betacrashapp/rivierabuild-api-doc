@@ -221,7 +221,7 @@ You must replace `your-api-key` with your personal API key.
 </tr>
 <tr>
 <td>availability</td>
-<td>Determines for how long the build will be available</td>
+<td>Determines for how long the build will be available. Available values: 10_minutes, 1_hour, 3_hours, 6_hours, 12_hours, 24_hours, 1_week, 2_weeks, 1_month, 2_months</td>
 </tr>
 <tr>
 <td>passcode</td>
@@ -238,6 +238,47 @@ You must replace `your-api-key` with your personal API key.
 <tr>
 <td>note</td>
 <td>Optional release note. Support Markdown.</td>
+</tr>
+</tbody></table>
+
+<h2 id="latest-build">Latest build</h2>
+<pre><code class="highlight shell">curl -XGET <span class="s2">"https://apps.rivierabuild.com/api/applications/1/builds/latest"</span>
+  -H <span class="s2">"api-key: your-api-key"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">59</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"build_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyApp.ipa"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-22T18:33:42.861Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"build_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"App Name"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Some note you wrote earlier"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"available_until"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-19T18:33:42.723Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"commit_sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ewfwefonwerfgoinrgerogrgojergpojergoeprgjerpogjer"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint uploads a build to Riviera Build.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://apps.rivierabuild.com/api/applications/&lt;app_id&gt;/builds/latest</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>app_id</td>
+<td>Application ID</td>
 </tr>
 </tbody></table>
 
