@@ -16,7 +16,7 @@ search: true
 
 # Introduction
 
-Welcome to the Riviera Build API! You can use our API to access Riviera Build API endpoints, which can get information on the application you have access to, builds uploaded, even upload builds!
+Welcome to the Riviera Build API! You can use our API to access Riviera Build API endpoints, which can get information on the applications you have access to, builds uploaded, even upload new builds!
 
 # Authentication
 
@@ -41,6 +41,8 @@ You must replace `your-api-key` with your personal API key.
 </aside>
 
 # Applications
+
+Applications are to RivieraBuild, what folders are to file systems. It allows you to organize the builds you upload.  
 
 ## Get All applications
 
@@ -210,4 +212,4 @@ This endpoint uploads a build to Riviera Build.
 
 Parameter | Description
 --------- | -----------
-app_id | Application ID 
+app_id | Application ID
