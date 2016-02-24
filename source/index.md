@@ -24,7 +24,7 @@ Welcome to the Riviera Build API! You can use our API to access Riviera Build AP
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "https://apps.rivierabuild.com/api/applications"
+curl "https://apps.rivierabuild.com/v1/applications"
   -H "api-key: your-api-key"
 ```
 
@@ -47,7 +47,7 @@ Applications are to RivieraBuild, what folders are to file systems. It allows yo
 ## Get All applications
 
 ```shell
-curl "https://apps.rivierabuild.com/api/applications"
+curl "https://apps.rivierabuild.com/v1/applications"
   -H "api-key: your-api-key"
 ```
 
@@ -74,15 +74,15 @@ This endpoint retrieves all applications.
 
 ### HTTP Request
 
-`GET https://apps.rivierabuild.com/api/applications`
+`GET https://apps.rivierabuild.com/v1/applications`
 
 
 ## Create an application
 
 ```shell
-curl -XPOST "https://apps.rivierabuild.com/api/applications"
+curl -XPOST "https://apps.rivierabuild.com/v1/applications"
   -H "api-key: your-api-key"
-  -F application[name]="Example App"
+  -F 'application[name]=Example App'
   -F file=@"/path/to/the/image/to/upload"
 ```
 
@@ -93,7 +93,8 @@ curl -XPOST "https://apps.rivierabuild.com/api/applications"
   "id":2,
   "user_id":1,
   "name":"Example App",
-  "logo_url":"https://example.com/image.png"
+  "logo_url":"https://example.com/image.png",
+  "icon" : {"url":"https://example.com/image.png"}
 }
 ```
 
@@ -101,7 +102,7 @@ This endpoint creates an application.
 
 ### HTTP Request
 
-`POST https://apps.rivierabuild.com/api/applications`
+`POST https://apps.rivierabuild.com/v1/applications`
 
 ### Parameters
 
@@ -114,7 +115,7 @@ file | Logo image file, as part of the the POST body (Optional)
 ## Delete an application
 
 ```shell
-curl -XDELETE "https://apps.rivierabuild.com/api/applications/1"
+curl -XDELETE "https://apps.rivierabuild.com/v1/applications/1"
   -H "api-key: your-api-key"
 ```
 
@@ -130,7 +131,7 @@ This endpoint deletes an application.
 
 ### HTTP Request
 
-`DELETE https://apps.rivierabuild.com/api/applications/<ID>`
+`DELETE https://apps.rivierabuild.com/v1/applications/<ID>`
 
 ### Parameters
 
@@ -143,7 +144,7 @@ ID | Application ID
 ## Upload a build
 
 ```shell
-curl -XPOST "https://apps.rivierabuild.com/api/upload"
+curl -XPOST "https://apps.rivierabuild.com/v1/builds"
   -H "api-key: your-api-key"
   -F file=@"/path/to/ipa/file"
   -F availability="1_week"
@@ -166,7 +167,7 @@ This endpoint uploads a build to Riviera Build.
 
 ### HTTP Request
 
-`POST https://apps.rivierabuild.com/api/upload`
+`POST https://apps.rivierabuild.com/v1/builds`
 
 ### Parameters
 
@@ -182,7 +183,7 @@ note | Optional release note. Support Markdown.
 ## Latest build
 
 ```shell
-curl -XGET "https://apps.rivierabuild.com/api/applications/1/builds/latest"
+curl -XGET "https://apps.rivierabuild.com/v1/applications/1/builds/latest"
   -H "api-key: your-api-key"
 ```
 
@@ -206,7 +207,7 @@ This endpoint uploads a build to Riviera Build.
 
 ### HTTP Request
 
-`GET https://apps.rivierabuild.com/api/applications/<app_id>/builds/latest`
+`GET https://apps.rivierabuild.com/v1/applications/<app_id>/builds/latest`
 
 ### Parameters
 
