@@ -54,7 +54,7 @@
 <p>To authorize, use this code:</p>
 </blockquote>
 <pre><code class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"https://apps.rivierabuild.com/api/applications"</span>
+curl <span class="s2">"https://apps.rivierabuild.com/v1/applications"</span>
   -H <span class="s2">"api-key: your-api-key"</span>
 </code></pre>
 
@@ -77,7 +77,7 @@ You must replace `your-api-key` with your personal API key.
 <p>Applications are to RivieraBuild, what folders are to file systems. It allows you to organize the builds you upload.  </p>
 
 <h2 id="get-all-applications">Get All applications</h2>
-<pre><code class="highlight shell">curl <span class="s2">"https://apps.rivierabuild.com/api/applications"</span>
+<pre><code class="highlight shell">curl <span class="s2">"https://apps.rivierabuild.com/v1/applications"</span>
   -H <span class="s2">"api-key: your-api-key"</span>
 </code></pre>
 
@@ -104,12 +104,12 @@ You must replace `your-api-key` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://apps.rivierabuild.com/api/applications</code></p>
+<p><code class="prettyprint">GET https://apps.rivierabuild.com/v1/applications</code></p>
 
 <h2 id="create-an-application">Create an application</h2>
-<pre><code class="highlight shell">curl -XPOST <span class="s2">"https://apps.rivierabuild.com/api/applications"</span>
+<pre><code class="highlight shell">curl -XPOST <span class="s2">"https://apps.rivierabuild.com/v1/applications"</span>
   -H <span class="s2">"api-key: your-api-key"</span>
-  -F application[name]<span class="o">=</span><span class="s2">"Example App"</span>
+  -F <span class="s1">'application[name]=Example App'</span>
   -F <span class="nv">file</span><span class="o">=</span>@<span class="s2">"/path/to/the/image/to/upload"</span>
 </code></pre>
 
@@ -120,7 +120,8 @@ You must replace `your-api-key` with your personal API key.
   </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="w">
   </span><span class="s2">"user_id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Example App"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"logo_url"</span><span class="p">:</span><span class="s2">"https://example.com/image.png"</span><span class="w">
+  </span><span class="s2">"logo_url"</span><span class="p">:</span><span class="s2">"https://example.com/image.png"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"icon"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"url"</span><span class="p">:</span><span class="s2">"https://example.com/image.png"</span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -128,7 +129,7 @@ You must replace `your-api-key` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://apps.rivierabuild.com/api/applications</code></p>
+<p><code class="prettyprint">POST https://apps.rivierabuild.com/v1/applications</code></p>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -149,7 +150,7 @@ You must replace `your-api-key` with your personal API key.
 </tbody></table>
 
 <h2 id="delete-an-application">Delete an application</h2>
-<pre><code class="highlight shell">curl -XDELETE <span class="s2">"https://apps.rivierabuild.com/api/applications/1"</span>
+<pre><code class="highlight shell">curl -XDELETE <span class="s2">"https://apps.rivierabuild.com/v1/applications/1"</span>
   -H <span class="s2">"api-key: your-api-key"</span>
 </code></pre>
 
@@ -165,7 +166,7 @@ You must replace `your-api-key` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://apps.rivierabuild.com/api/applications/&lt;ID&gt;</code></p>
+<p><code class="prettyprint">DELETE https://apps.rivierabuild.com/v1/applications/&lt;ID&gt;</code></p>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -184,7 +185,7 @@ You must replace `your-api-key` with your personal API key.
 <h1 id="builds">Builds</h1>
 
 <h2 id="upload-a-build">Upload a build</h2>
-<pre><code class="highlight shell">curl -XPOST <span class="s2">"https://apps.rivierabuild.com/api/upload"</span>
+<pre><code class="highlight shell">curl -XPOST <span class="s2">"https://apps.rivierabuild.com/v1/builds"</span>
   -H <span class="s2">"api-key: your-api-key"</span>
   -F <span class="nv">file</span><span class="o">=</span>@<span class="s2">"/path/to/ipa/file"</span>
   -F <span class="nv">availability</span><span class="o">=</span><span class="s2">"1_week"</span>
@@ -207,7 +208,7 @@ You must replace `your-api-key` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://apps.rivierabuild.com/api/upload</code></p>
+<p><code class="prettyprint">POST https://apps.rivierabuild.com/v1/builds</code></p>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -244,7 +245,7 @@ You must replace `your-api-key` with your personal API key.
 </tbody></table>
 
 <h2 id="latest-build">Latest build</h2>
-<pre><code class="highlight shell">curl -XGET <span class="s2">"https://apps.rivierabuild.com/api/applications/1/builds/latest"</span>
+<pre><code class="highlight shell">curl -XGET <span class="s2">"https://apps.rivierabuild.com/v1/applications/1/builds/latest"</span>
   -H <span class="s2">"api-key: your-api-key"</span>
 </code></pre>
 
@@ -268,7 +269,7 @@ You must replace `your-api-key` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://apps.rivierabuild.com/api/applications/&lt;app_id&gt;/builds/latest</code></p>
+<p><code class="prettyprint">GET https://apps.rivierabuild.com/v1/applications/&lt;app_id&gt;/builds/latest</code></p>
 
 <h3 id="parameters">Parameters</h3>
 
