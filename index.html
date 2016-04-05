@@ -285,6 +285,37 @@ You must replace `your-api-key` with your personal API key.
 </tr>
 </tbody></table>
 
+<h1 id="xcode-integration">Xcode Integration</h1>
+
+<h2 id="upload-a-build">Upload a build</h2>
+<pre><code class="highlight shell"><span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"you-api-key"</span>
+<span class="nv">APP_ID</span><span class="o">=</span><span class="s2">"your-app-id"</span> <span class="c">#example: 1</span>
+<span class="nv">PASSWORD</span><span class="o">=</span><span class="s2">"your-password"</span>
+<span class="nv">AVAILABILITY</span><span class="o">=</span><span class="s2">"10_minutes"</span> <span class="c">#10_minutes, 1_hour, 3_hours, 6_hours, 12_hours, 24_hours, forever</span>
+<span class="nv">TMP_FILE_PATH</span><span class="o">=</span><span class="s2">"/tmp/</span><span class="k">${</span><span class="nv">PRODUCT_NAME</span><span class="k">}</span><span class="s2">.ipa"</span>
+
+xcrun -sdk iphoneos PackageApplication <span class="s2">"</span><span class="nv">$ARCHIVE_PRODUCTS_PATH</span><span class="s2">/</span><span class="nv">$INSTALL_PATH</span><span class="s2">/</span><span class="nv">$WRAPPER_NAME</span><span class="s2">"</span> -o <span class="s2">"</span><span class="k">${</span><span class="nv">TMP_FILE_PATH</span><span class="k">}</span><span class="s2">"</span>
+<span class="nv">OUTPUT</span><span class="o">=</span><span class="k">$(</span>/usr/bin/curl <span class="s2">"https://apps.rivierabuild.com/api/upload"</span> -F <span class="nv">api_key</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_KEY</span><span class="k">}</span><span class="s2">"</span> -F <span class="nv">app_id</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">APP_ID</span><span class="k">}</span><span class="s2">"</span> -F <span class="nv">file</span><span class="o">=</span>@<span class="s2">"</span><span class="k">${</span><span class="nv">TMP_FILE_PATH</span><span class="k">}</span><span class="s2">"</span> -F <span class="nv">availability</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">AVAILABILITY</span><span class="k">}</span><span class="s2">"</span> -F <span class="nv">passcode</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">PASSWORD</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span> <span class="c">#the password parametre is optional here</span>
+<span class="nv">URL</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$OUTPUT</span> | python -m json.tool | sed -n -e <span class="s1">'/"file_url":/ s/^.*"\(.*\)".*/\1/p'</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$URL</span> | pbcopy
+osascript -e <span class="s1">'display notification "Copied to clipboard: '</span><span class="nv">$URL</span><span class="s1">'" with title "Riviera Build"'</span>
+open <span class="nv">$URL</span>
+</code></pre>
+
+<p>To upload a build everytime you create an archive:</p>
+
+<ul>
+<li>Open your project</li>
+<li>Edit the scheme of the target of your application</li>
+<li>Unfold the Archive section</li>
+<li>Select the Post-actions item</li>
+<li>Tap on the small &rsquo;+&rsquo; to add a script</li>
+<li>Make sure to select the target or your application (to use its configuration).</li>
+<li>Customize the script (password, availability etc)</li>
+<li>You can now launch the Archive command: it will, at the end, open the uploaded link into your webbrowser, you&rsquo;ll also have the link in your clipboard</li>
+</ul>
+
           
       </div>
       <div class="dark-box">
