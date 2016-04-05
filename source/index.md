@@ -214,3 +214,32 @@ This endpoint uploads a build to Riviera Build.
 Parameter | Description
 --------- | -----------
 app_id | Application ID
+
+#Xcode Integration
+## Upload a build
+
+```shell
+API_KEY="you-api-key"
+APP_ID="your-app-id" #example: 1
+PASSWORD="your-password"
+AVAILABILITY="10_minutes" #10_minutes, 1_hour, 3_hours, 6_hours, 12_hours, 24_hours, forever
+TMP_FILE_PATH="/tmp/${PRODUCT_NAME}.ipa"
+
+xcrun -sdk iphoneos PackageApplication "$ARCHIVE_PRODUCTS_PATH/$INSTALL_PATH/$WRAPPER_NAME" -o "${TMP_FILE_PATH}"
+OUTPUT=$(/usr/bin/curl "https://apps.rivierabuild.com/api/upload" -F api_key="${API_KEY}" -F app_id="${APP_ID}" -F file=@"${TMP_FILE_PATH}" -F availability="${AVAILABILITY}" -F passcode="${PASSWORD}") #the password parametre is optional here
+URL=$(echo $OUTPUT | python -m json.tool | sed -n -e '/"file_url":/ s/^.*"\(.*\)".*/\1/p')
+
+echo $URL | pbcopy
+osascript -e 'display notification "Copied to clipboard: '$URL'" with title "Riviera Build"'
+open $URL
+```
+To upload a build everytime you create an archive:
+
+* Open your project
+* Edit the scheme of the target of your application
+* Unfold the Archive section
+* Select the Post-actions item
+* Tap on the small '+' to add a script
+* Make sure to select the target or your application (to use its configuration).
+* Customize the script (password, availability etc)
+* You can now launch the Archive command: it will, at the end, open the uploaded link into your webbrowser, you'll also have the link in your clipboard
