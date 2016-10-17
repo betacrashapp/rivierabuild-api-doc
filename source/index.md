@@ -24,13 +24,13 @@ Welcome to the Riviera Build API! You can use our API to access Riviera Build AP
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "https://apps.rivierabuild.com/v1/applications"
+curl "https://apps.betacrash.com/v1/applications"
   -H "api-key: your-api-key"
 ```
 
 > Make sure to replace `your-api-key` with your API key.
 
-Riviera Build uses API keys to allow access to the API. You can get your Riviera Build API key in the [settings section](https://apps.rivierabuild.com/settings).
+Riviera Build uses API keys to allow access to the API. You can get your Riviera Build API key in the [settings section](https://apps.betacrash.com/settings).
 
 Riviera Build expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
@@ -42,12 +42,12 @@ You must replace `your-api-key` with your personal API key.
 
 # Applications
 
-Applications are to RivieraBuild, what folders are to file systems. It allows you to organize the builds you upload.  
+Applications are to Betacrash, what folders are to file systems. It allows you to organize the builds you upload.  
 
 ## Get All applications
 
 ```shell
-curl "https://apps.rivierabuild.com/v1/applications"
+curl "https://apps.betacrash.com/v1/applications"
   -H "api-key: your-api-key"
 ```
 
@@ -74,13 +74,13 @@ This endpoint retrieves all applications.
 
 ### HTTP Request
 
-`GET https://apps.rivierabuild.com/v1/applications`
+`GET https://apps.betacrash.com/v1/applications`
 
 
 ## Create an application
 
 ```shell
-curl -XPOST "https://apps.rivierabuild.com/v1/applications"
+curl -XPOST "https://apps.betacrash.com/v1/applications"
   -H "api-key: your-api-key"
   -F 'application[name]=Example App'
   -F file=@"/path/to/the/image/to/upload"
@@ -102,7 +102,7 @@ This endpoint creates an application.
 
 ### HTTP Request
 
-`POST https://apps.rivierabuild.com/v1/applications`
+`POST https://apps.betacrash.com/v1/applications`
 
 ### Parameters
 
@@ -115,7 +115,7 @@ file | Logo image file, as part of the the POST body (Optional)
 ## Delete an application
 
 ```shell
-curl -XDELETE "https://apps.rivierabuild.com/v1/applications/1"
+curl -XDELETE "https://apps.betacrash.com/v1/applications/1"
   -H "api-key: your-api-key"
 ```
 
@@ -131,7 +131,7 @@ This endpoint deletes an application.
 
 ### HTTP Request
 
-`DELETE https://apps.rivierabuild.com/v1/applications/<ID>`
+`DELETE https://apps.betacrash.com/v1/applications/<ID>`
 
 ### Parameters
 
@@ -144,7 +144,7 @@ ID | Application ID
 ## Upload a build
 
 ```shell
-curl -XPOST "https://apps.rivierabuild.com/v1/builds"
+curl -XPOST "https://apps.betacrash.com/v1/builds"
   -H "api-key: your-api-key"
   -F file=@"/path/to/ipa/file"
   -F availability="1_week"
@@ -159,7 +159,7 @@ curl -XPOST "https://apps.rivierabuild.com/v1/builds"
 ```json
 {
   "success":true,
-  "file_url":"https://apps.rivierabuild.com/get/dovjek"
+  "file_url":"https://apps.betacrash.com/get/dovjek"
 }
 ```
 
@@ -167,7 +167,7 @@ This endpoint uploads a build to Riviera Build.
 
 ### HTTP Request
 
-`POST https://apps.rivierabuild.com/v1/builds`
+`POST https://apps.betacrash.com/v1/builds`
 
 ### Parameters
 
@@ -183,7 +183,7 @@ note | Optional release note. Support Markdown.
 ## Latest build
 
 ```shell
-curl -XGET "https://apps.rivierabuild.com/v1/applications/1/builds/latest"
+curl -XGET "https://apps.betacrash.com/v1/applications/1/builds/latest"
   -H "api-key: your-api-key"
 ```
 
@@ -207,7 +207,7 @@ This endpoint uploads a build to Riviera Build.
 
 ### HTTP Request
 
-`GET https://apps.rivierabuild.com/v1/applications/<app_id>/builds/latest`
+`GET https://apps.betacrash.com/v1/applications/<app_id>/builds/latest`
 
 ### Parameters
 
@@ -226,7 +226,7 @@ AVAILABILITY="10_minutes" #10_minutes, 1_hour, 3_hours, 6_hours, 12_hours, 24_ho
 TMP_FILE_PATH="/tmp/${PRODUCT_NAME}.ipa"
 
 xcrun -sdk iphoneos PackageApplication "$ARCHIVE_PRODUCTS_PATH/$INSTALL_PATH/$WRAPPER_NAME" -o "${TMP_FILE_PATH}"
-OUTPUT=$(/usr/bin/curl "https://apps.rivierabuild.com/api/upload" -F api_key="${API_KEY}" -F app_id="${APP_ID}" -F file=@"${TMP_FILE_PATH}" -F availability="${AVAILABILITY}" -F passcode="${PASSWORD}") #the password parametre is optional here
+OUTPUT=$(/usr/bin/curl "https://apps.betacrash.com/api/upload" -F api_key="${API_KEY}" -F app_id="${APP_ID}" -F file=@"${TMP_FILE_PATH}" -F availability="${AVAILABILITY}" -F passcode="${PASSWORD}") #the password parametre is optional here
 URL=$(echo $OUTPUT | python -m json.tool | sed -n -e '/"file_url":/ s/^.*"\(.*\)".*/\1/p')
 
 echo $URL | pbcopy
